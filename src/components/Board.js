@@ -1,3 +1,4 @@
+// Board.js
 import React, { useState } from 'react';
 import Square from './Square';
 
@@ -50,12 +51,45 @@ const Board = () => {
   ];
 
   const [board, setBoard] = useState(initialBoardSetup);
+  const [selectedPiece, setSelectedPiece] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState(null);
+
+  const handleSquareClick = (row, col) => {
+    const piece = board[row][col];
+
+    if (selectedPiece) {
+      // If a piece is already selected, move it to the clicked square
+      const newBoard = board.map(row => row.slice()); // Deep copy board
+
+      // Place the selected piece in the new position
+      newBoard[row][col] = selectedPiece;
+      // Clear the previous position
+      newBoard[selectedPosition.row][selectedPosition.col] = null;
+
+      setBoard(newBoard);
+      setSelectedPiece(null); // Deselect after moving
+      setSelectedPosition(null); // Clear selected position
+    } else if (piece) {
+      // If no piece is selected, select the clicked square's piece
+      setSelectedPiece(piece);
+      setSelectedPosition({ row, col });
+    }
+  };
 
   const renderSquare = (row, col) => {
     const isWhite = (row + col) % 2 === 0;
     const color = isWhite ? 'white' : 'black';
     const piece = board[row][col]; // Get the piece from the board state
-    return <Square key={`${row}-${col}`} color={color} piece={piece} />;
+    return (
+      <Square
+        key={`${row}-${col}`}
+        x={col}
+        y={row}
+        color={color}
+        piece={piece}
+        onClick={() => handleSquareClick(row, col)}
+      />
+    );
   };
 
   const createBoard = () => {
