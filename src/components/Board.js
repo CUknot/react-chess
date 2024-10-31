@@ -1,6 +1,6 @@
-// Board.js
 import React, { useState } from 'react';
 import Square from './Square';
+import validateMove from '../utils/validateMove';
 
 const Board = () => {
   const initialBoardSetup = [
@@ -51,35 +51,41 @@ const Board = () => {
   ];
 
   const [board, setBoard] = useState(initialBoardSetup);
-  const [selectedPiece, setSelectedPiece] = useState(null);
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedSquare, setSelectedSquare] = useState(null);
 
-  const handleSquareClick = (row, col) => {
-    const piece = board[row][col];
+  // Define the updateBoard function
+  const updateBoard = (startX, startY, targetX, targetY) => {
+    // Clone the board to avoid directly mutating state
+    const newBoard = board.map(row => row.slice());
 
-    if (selectedPiece) {
-      // If a piece is already selected, move it to the clicked square
-      const newBoard = board.map(row => row.slice()); // Deep copy board
+    // Move the piece to the target location
+    newBoard[targetY][targetX] = newBoard[startY][startX];
+    newBoard[startY][startX] = null; // Empty the original square
 
-      // Place the selected piece in the new position
-      newBoard[row][col] = selectedPiece;
-      // Clear the previous position
-      newBoard[selectedPosition.row][selectedPosition.col] = null;
+    // Update the state with the new board
+    setBoard(newBoard);
+  };
 
-      setBoard(newBoard);
-      setSelectedPiece(null); // Deselect after moving
-      setSelectedPosition(null); // Clear selected position
-    } else if (piece) {
-      // If no piece is selected, select the clicked square's piece
-      setSelectedPiece(piece);
-      setSelectedPosition({ row, col });
+  const handleSquareClick = (x, y) => {
+    if (selectedSquare) {
+      const [startX, startY] = selectedSquare;
+      const piece = board[startY][startX];
+  
+      // Validate the move with explicit coordinates
+      if (validateMove(startX, startY, x, y, piece, board)) {
+        updateBoard(startX, startY, x, y); // Move the piece
+      }
+  
+      setSelectedSquare(null); // Deselect after move
+    } else {
+      setSelectedSquare([x, y]); // Select the piece
     }
   };
 
   const renderSquare = (row, col) => {
     const isWhite = (row + col) % 2 === 0;
     const color = isWhite ? 'white' : 'black';
-    const piece = board[row][col]; // Get the piece from the board state
+    const piece = board[row][col];
     return (
       <Square
         key={`${row}-${col}`}
@@ -87,7 +93,7 @@ const Board = () => {
         y={row}
         color={color}
         piece={piece}
-        onClick={() => handleSquareClick(row, col)}
+        onClick={() => handleSquareClick(col, row)} // Pass coordinates on click
       />
     );
   };
