@@ -102,6 +102,7 @@ const Board = () => {
     const isWhite = (row + col) % 2 === 0;
     const color = isWhite ? 'white' : 'black';
     const piece = board[row][col];
+    const isHighlighted = selectedSquare && selectedSquare[0] === col && selectedSquare[1] === row;
     return (
       <Square
         key={`${row}-${col}`}
@@ -110,6 +111,7 @@ const Board = () => {
         color={color}
         piece={piece}
         onClick={() => handleSquareClick(col, row)} // Pass coordinates on click
+        highlight={isHighlighted} // Apply highlight if this square is selected
       />
     );
   };
@@ -124,7 +126,12 @@ const Board = () => {
     return squares;
   };
 
-  return <div className="grid grid-cols-8 gap-0">{createBoard()}</div>;
+  return <div>
+    <div>current turn: {turn}</div>
+    <div className="grid grid-cols-8 gap-0">
+    {createBoard()}
+    </div>
+    </div>;
 };
 
 export default Board;

@@ -1,19 +1,25 @@
-// Square.js
 import React from 'react';
 import Piece from './Piece';
 
-const Square = ({ x, y, color, piece, onClick, highlight}) => {
-  const bgColor = color === 'white' ? 'bg-[#f0d9b5]' : 'bg-[#b58863]';
-  if(highlight) bgColor = 'red';
+const Square = ({ x, y, color, piece, onClick, highlight }) => {
+  const bgColor = color === 'white' ? '#f0d9b5' : '#b58863';
+  const backgroundColor = highlight ? 'red' : bgColor;
 
   return (
     <div
       onClick={onClick}
-      className={`w-16 h-16 flex items-center justify-center ${bgColor}`}
+      style={{
+        width: '50px',
+        height: '50px',
+        backgroundColor: backgroundColor, // explicitly use variable without reassignment
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid black'
+      }}
     >
       {piece && <Piece type={piece.type} color={piece.color} />}
     </div>
-  
   );
 };
 
