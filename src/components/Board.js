@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Square from './Square';
 import validateMove from '../utils/validateMove';
@@ -52,9 +53,11 @@ const Board = () => {
 
   const [board, setBoard] = useState(initialBoardSetup);
   const [selectedSquare, setSelectedSquare] = useState(null);
+  const [lastMove, setLastMove] = useState(null); 
+  const [turn , setTurn] = useState('white');
 
   // Define the updateBoard function
-  const updateBoard = (startX, startY, targetX, targetY) => {
+  const updateBoard = (startX, startY, targetX, targetY, piece, enPassantCapture) => {
     // Clone the board to avoid directly mutating state
     const newBoard = board.map(row => row.slice());
 
@@ -62,23 +65,36 @@ const Board = () => {
     newBoard[targetY][targetX] = newBoard[startY][startX];
     newBoard[startY][startX] = null; // Empty the original square
 
+    if (enPassantCapture) {
+      newBoard[startY][targetX] = null; // Remove the captured pawn
+    }
+
     // Update the state with the new board
     setBoard(newBoard);
+
+    // Set the last move (to track for en passant)
+    setLastMove({ startX, startY, targetX, targetY, piece });
+
+    // Switch turns
+    setTurn(turn === 'white' ? 'black' : 'white');
   };
 
   const handleSquareClick = (x, y) => {
     if (selectedSquare) {
       const [startX, startY] = selectedSquare;
       const piece = board[startY][startX];
+      const { isValid, enPassantCapture } = validateMove(startX, startY, x, y, piece, board, lastMove, turn);
+      //console.log(isValid, enPassantCapture);
   
       // Validate the move with explicit coordinates
-      if (validateMove(startX, startY, x, y, piece, board)) {
-        updateBoard(startX, startY, x, y); // Move the piece
+      if (isValid) {
+        updateBoard(startX, startY, x, y, piece, enPassantCapture); // Move the piece
       }
   
       setSelectedSquare(null); // Deselect after move
     } else {
       setSelectedSquare([x, y]); // Select the piece
+      
     }
   };
 

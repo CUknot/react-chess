@@ -2,8 +2,9 @@
 import React from 'react';
 import Piece from './Piece';
 
-const Square = ({ x, y, color, piece, onClick }) => {
+const Square = ({ x, y, color, piece, onClick, highlight}) => {
   const bgColor = color === 'white' ? 'bg-[#f0d9b5]' : 'bg-[#b58863]';
+  if(highlight) bgColor = 'red';
 
   return (
     <div
@@ -12,6 +13,7 @@ const Square = ({ x, y, color, piece, onClick }) => {
     >
       {piece && <Piece type={piece.type} color={piece.color} />}
     </div>
+  
   );
 };
 
