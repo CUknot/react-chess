@@ -2,11 +2,9 @@ import validateMove from './validateMove';
 import isKingInCheck from './validateMove';
 
 const isCheckmate = (color, board, lastMove) => {
-    // First, check if the king is in check
-    console.log(color, board, lastMove);
     if (!isKingInCheck(color, board, lastMove)) {
       console.log("0");
-      return false; // Not in check, so not checkmate
+      return false; 
     }
   
     // Check all pieces of the current color to see if any can make a legal move

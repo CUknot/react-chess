@@ -1,15 +1,17 @@
-import React from 'react';
-
-const GameOverScreen = ({ winner, onRestart, onMainMenu }) => {
-  return (
-    <div className="game-over-screen">
-      <h1>Game Over</h1>
-      <h2>{winner ? `${winner} Wins!` : "It's a Draw!"}</h2>
-      <div className="button-container">
-        <button onClick={onRestart} className="restart-button">Restart Game</button>
+const GameOverScreen = ({ winner, onRestart }) => {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-800 text-white">
+        <h1 className="text-4xl font-bold mb-4">Game Over</h1>
+        <p className="text-2xl mb-4">{winner} wins!</p>
+        <button
+          onClick={onRestart}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-lg transition duration-300"
+        >
+          Restart Game
+        </button>
       </div>
-    </div>
-  );
-};
-
-export default GameOverScreen;
+    );
+  };
+  
+  export default GameOverScreen;
+  

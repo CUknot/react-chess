@@ -16,7 +16,6 @@ const Game = () => {
   const restartGame = () => {
     setWinner(null);
     setIsGameOver(false);
-    // Reset the board and other game state as needed
   };
 
   return (
@@ -27,7 +26,10 @@ const Game = () => {
           onRestart={restartGame}  
         />
       ) : (
-        <Board onGameOver={handleGameOver} />
+        <div className="text-center">
+          <h1 className="text-6xl font-bold mb-4">Chess Game</h1>
+          <Board onGameOver={handleGameOver} />
+        </div>
       )}
     </div>
   );

@@ -54,7 +54,7 @@ const Board = ({ onGameOver }) => {
   const [board, setBoard] = useState(initialBoardSetup);
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [lastMove, setLastMove] = useState(null); 
-  const [validMoves, setValidMoves] = useState([]); // Track valid moves
+  const [validMoves, setValidMoves] = useState([]); 
   const [turn , setTurn] = useState('white');
 
   // Define the updateBoard function
@@ -62,64 +62,53 @@ const Board = ({ onGameOver }) => {
     // Clone the board to avoid directly mutating state
     const newBoard = board.map(row => row.slice());
 
-    // Move the piece to the target location
     newBoard[targetY][targetX] = newBoard[startY][startX];
-    newBoard[startY][startX] = null; // Empty the original square
+    newBoard[startY][startX] = null; 
 
     if (enPassantCapture) {
-      newBoard[startY][targetX] = null; // Remove the captured pawn
+      newBoard[startY][targetX] = null; 
     }
 
-    // Update the state with the new board
     setBoard(newBoard);
-
-    // Set the last move (to track for en passant)
     setLastMove({ startX, startY, targetX, targetY, piece });
-
-    // Switch turns
     setTurn(turn === 'white' ? 'black' : 'white');
-
     setValidMoves([]);
   };
 
   useEffect(() => {
     if (isCheckmate(turn, board, lastMove)) {
-      console.log(`${turn} loses!`); // Or set some game over state
       onGameOver(turn === 'white' ? 'Black' : 'White');
     }
-  }, [board, turn, lastMove, onGameOver]); // Dependencies for useEffect
+  }, [board, turn, lastMove, onGameOver]); 
 
   const handleSquareClick = (x, y) => {
     if (selectedSquare) {
       const [startX, startY] = selectedSquare;
       const piece = board[startY][startX];
       const { isValid, enPassantCapture } = validateMove(startX, startY, x, y, piece, board, lastMove, turn);
-      //console.log(isValid, enPassantCapture);
   
-      // Validate the move with explicit coordinates
       if (isValid) {
-        updateBoard(startX, startY, x, y, piece, enPassantCapture); // Move the piece
+        updateBoard(startX, startY, x, y, piece, enPassantCapture); 
       }
   
-      setSelectedSquare(null); // Deselect after move
-      setValidMoves([]); // Clear highlights after moving
+      setSelectedSquare(null); 
+      setValidMoves([]); 
     } else {
       const piece = board[y][x];
 
-      setSelectedSquare([x, y]); // Select the piece
-      calculateValidMoves(x, y, piece); // Calculate moves for highlighting
+      setSelectedSquare([x, y]); 
+      calculateValidMoves(x, y, piece); 
     }
   };
 
   const calculateValidMoves = (x, y, piece) => {
     const moves = [];
 
-    // Check every square on the board to see if it's a valid move
     for (let targetY = 0; targetY < 8; targetY++) {
       for (let targetX = 0; targetX < 8; targetX++) {
         const { isValid } = validateMove(x, y, targetX, targetY, piece, board, null, turn);
         if (isValid) {
-          moves.push([targetX, targetY]); // Add valid move coordinates
+          moves.push([targetX, targetY]); 
         }
       }
     }
@@ -129,24 +118,21 @@ const Board = ({ onGameOver }) => {
 
   const renderSquare = (row, col) => {
     const isWhite = (row + col) % 2 === 0;
-    let color = isWhite ? 'white' : 'black'; // Change 'const' to 'let'
+    let color = isWhite ? 'bg-white' : 'bg-gray-700'; 
     const piece = board[row][col];
     
-    // Update the color based on conditions
     if (selectedSquare && selectedSquare[0] === col && selectedSquare[1] === row) {
-        color = 'red'; // Highlight selected square
+      color = 'bg-red-300';
     } else if (validMoves.some(([x, y]) => x === col && y === row)) {
-        color = 'green'; // Highlight valid moves
+      color = 'bg-green-300';  
     }
 
     return (
       <Square
         key={`${row}-${col}`}
-        x={col}
-        y={row}
         color={color}
         piece={piece}
-        onClick={() => handleSquareClick(col, row)} // Pass coordinates on click
+        onClick={() => handleSquareClick(col, row)} 
       />
     );
 }
@@ -162,12 +148,14 @@ const Board = ({ onGameOver }) => {
     return squares;
   };
 
-  return <div>
-    <div>current turn: {turn}</div>
-    <div className="grid grid-cols-8 gap-0">
-    {createBoard()}
+  return (
+    <div className="p-4 bg-gray-900 text-white">
+      <h2 className="text-2xl mb-4">Current Turn: {turn}</h2>
+      <div className="grid grid-cols-8 gap-0">
+        {createBoard()}
+      </div>
     </div>
-    </div>;
+  );
 };
 
 export default Board;

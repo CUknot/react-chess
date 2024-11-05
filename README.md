@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Chess Game Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is a web-based chess game developed using React. The project aims to provide an engaging user experience while learning about various web development concepts, including state management, component structure, and styling with Tailwind CSS. 
 
-In the project directory, you can run:
+## Technologies Used
 
-### `npm start`
+- **React**: A JavaScript library for building user interfaces. It allows for the creation of reusable components, making the codebase easier to manage and scale.
+- **Tailwind CSS**: A utility-first CSS framework that provides low-level utility classes for styling. It simplifies the process of creating responsive designs and custom styles.
+- **JavaScript**: The primary programming language used for building the game logic and interactivity.
+- **ES6+ Features**: Utilizing modern JavaScript features such as arrow functions, destructuring, and modules to write cleaner and more efficient code.
+- **GitHub Pages**: For hosting the web application.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Learning Objectives
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Through the development of this chess game, I aim to achieve the following learning objectives:
 
-### `npm test`
+1. **Component-Based Architecture**: Understanding how to design and implement a component-based architecture in React, which enhances code reusability and maintainability.
+  
+2. **State Management**: Learning how to manage state effectively within components using React hooks like `useState`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Game Logic Implementation**: Gaining experience in implementing complex game logic, including piece movement validation, turn management, and detecting checkmate.
 
-### `npm run build`
+4. **Styling with Tailwind CSS**: Familiarizing myself with Tailwind CSS to create responsive layouts and visually appealing designs without writing extensive custom CSS.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. **User Experience (UX) Design**: Focusing on creating an intuitive user experience, including game interactions and visual feedback (e.g., highlighting valid moves, game over screens).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **/src**: Contains all the source code for the application.
+- **/components**: Reusable components such as `Board`, `Square`, `Piece`, `GameOverScreen`, etc.
+- **/utils**: Utility functions for game logic, including move validation and checkmate detection.
 
-### `npm run eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Play a complete game of chess with a functional game board.
+- Game over screen that displays the winner.
+- Responsive design with Tailwind CSS for a modern look and feel.
+- Restart functionality to reset the game.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## How to Run the Project
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To run the project locally, follow these steps:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository:
+   git clone https://github.com/CUknot/react-chess.git
+   cd chess-game
 
-## Learn More
+2. Install the dependencies:
+    npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. npm start

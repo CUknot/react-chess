@@ -9,7 +9,6 @@ const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, 
   const targetPiece = board[targetY][targetX];
   if (targetPiece && targetPiece.color === piece.color) return { isValid: false , enPassantCapture: false};
 
-  // Check piece type and apply movement rules
   let isValid = false;
   let enPassantCapture = false;
   switch (piece.type) {
@@ -88,15 +87,13 @@ const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, 
   }
 
   if (isValid) {
-   // Clone the board to avoid directly mutating state
    const newBoard = board.map(row => row.slice());
 
-   // Move the piece to the target location
    newBoard[targetY][targetX] = newBoard[startY][startX];
-   newBoard[startY][startX] = null; // Empty the original square
+   newBoard[startY][startX] = null; 
 
    if (enPassantCapture) {
-     newBoard[startY][targetX] = null; // Remove the captured pawn
+     newBoard[startY][targetX] = null; 
    }
 
     if (isKingInCheck(piece.color, newBoard, lastMove)) {
@@ -107,7 +104,6 @@ const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, 
   return { isValid, enPassantCapture };
 };
 
-// Check if the king of a given color is in check
 const isKingInCheck = (color, board, lastMove) => {
   let kingPosition = null;
 
@@ -122,8 +118,7 @@ const isKingInCheck = (color, board, lastMove) => {
     }
   }
 
-  if (!kingPosition) return false ; // No king found (should not happen in a normal game)
-  //console.log(kingPosition);
+  if (!kingPosition) return false ; 
 
   // Check if any opponent piece can move to the king's position
   const opponentColor = color === 'white' ? 'black' : 'white';
@@ -132,13 +127,13 @@ const isKingInCheck = (color, board, lastMove) => {
       const piece = board[y][x];
       if (piece && piece.color === opponentColor) {
         if (validateMove(x, y, kingPosition.x, kingPosition.y, piece, board, lastMove, opponentColor).isValid) {
-          return true ; // King is in check
+          return true ; 
         }
       }
     }
   }
 
-  return false ; // King is not in check
+  return false ; 
 };
 
 // Helper function to check if the path is clear (for rook, bishop, and queen)
