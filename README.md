@@ -44,10 +44,12 @@ Through the development of this chess game, I aim to achieve the following learn
 To run the project locally, follow these steps:
 
 1. Clone the repository:
-   git clone https://github.com/CUknot/react-chess.git
+   git clone [https://github.com/CUknot/react-chess.git](https://github.com/CUknot/react-chess.git)
    cd chess-game
 
 2. Install the dependencies:
     npm install
 
 3. npm start
+
+or go to [https://cuknot.github.io/react-chess/](https://cuknot.github.io/react-chess/)
