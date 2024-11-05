@@ -89,12 +89,19 @@ const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, 
   }
 
   if (isValid) {
-    // Simulate the move to check if it leaves the king in check
-    const newBoard = board.map(row => row.slice()); // Clone the board
-    newBoard[targetY][targetX] = piece; // Move piece to target position
-    newBoard[startY][startX] = null; // Remove piece from start position
-    
+   // Clone the board to avoid directly mutating state
+   const newBoard = board.map(row => row.slice());
+
+   // Move the piece to the target location
+   newBoard[targetY][targetX] = newBoard[startY][startX];
+   newBoard[startY][startX] = null; // Empty the original square
+
+   if (enPassantCapture) {
+     newBoard[startY][targetX] = null; // Remove the captured pawn
+   }
+
     if (isKingInCheck(piece.color, newBoard, lastMove)) {
+      console.log("check");
       return { isValid: false , enPassantCapture: false}; // Move is invalid if it leaves the king in check
     }
   }
@@ -118,6 +125,7 @@ const isKingInCheck = (color, board, lastMove) => {
   }
 
   if (!kingPosition) return false ; // No king found (should not happen in a normal game)
+  console.log(kingPosition);
 
   // Check if any opponent piece can move to the king's position
   const opponentColor = color === 'white' ? 'black' : 'white';
@@ -125,8 +133,7 @@ const isKingInCheck = (color, board, lastMove) => {
     for (let x = 0; x < 8; x++) {
       const piece = board[y][x];
       if (piece && piece.color === opponentColor) {
-        const { isValid, enPassantCapture } = validateMove(x, y, kingPosition.x, kingPosition.y, piece, board, lastMove);
-        if (isValid) {
+        if (validateMove(x, y, kingPosition.x, kingPosition.y, piece, board, lastMove, opponentColor).isValid) {
           return true ; // King is in check
         }
       }

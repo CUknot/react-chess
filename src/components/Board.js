@@ -54,6 +54,7 @@ const Board = () => {
   const [board, setBoard] = useState(initialBoardSetup);
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [lastMove, setLastMove] = useState(null); 
+  const [validMoves, setValidMoves] = useState([]); // Track valid moves
   const [turn , setTurn] = useState('white');
 
   // Define the updateBoard function
@@ -77,6 +78,8 @@ const Board = () => {
 
     // Switch turns
     setTurn(turn === 'white' ? 'black' : 'white');
+
+    setValidMoves([]);
   };
 
   const handleSquareClick = (x, y) => {
@@ -92,17 +95,43 @@ const Board = () => {
       }
   
       setSelectedSquare(null); // Deselect after move
+      setValidMoves([]); // Clear highlights after moving
     } else {
+      const piece = board[y][x];
+
       setSelectedSquare([x, y]); // Select the piece
-      
+      calculateValidMoves(x, y, piece); // Calculate moves for highlighting
     }
+  };
+
+  const calculateValidMoves = (x, y, piece) => {
+    const moves = [];
+
+    // Check every square on the board to see if it's a valid move
+    for (let targetY = 0; targetY < 8; targetY++) {
+      for (let targetX = 0; targetX < 8; targetX++) {
+        const { isValid } = validateMove(x, y, targetX, targetY, piece, board, null, turn);
+        if (isValid) {
+          moves.push([targetX, targetY]); // Add valid move coordinates
+        }
+      }
+    }
+
+    setValidMoves(moves);
   };
 
   const renderSquare = (row, col) => {
     const isWhite = (row + col) % 2 === 0;
-    const color = isWhite ? 'white' : 'black';
+    let color = isWhite ? 'white' : 'black'; // Change 'const' to 'let'
     const piece = board[row][col];
-    const isHighlighted = selectedSquare && selectedSquare[0] === col && selectedSquare[1] === row;
+    
+    // Update the color based on conditions
+    if (selectedSquare && selectedSquare[0] === col && selectedSquare[1] === row) {
+        color = 'red'; // Highlight selected square
+    } else if (validMoves.some(([x, y]) => x === col && y === row)) {
+        color = 'green'; // Highlight valid moves
+    }
+
     return (
       <Square
         key={`${row}-${col}`}
@@ -111,10 +140,10 @@ const Board = () => {
         color={color}
         piece={piece}
         onClick={() => handleSquareClick(col, row)} // Pass coordinates on click
-        highlight={isHighlighted} // Apply highlight if this square is selected
       />
     );
-  };
+}
+
 
   const createBoard = () => {
     let squares = [];

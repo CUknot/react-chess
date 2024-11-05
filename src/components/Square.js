@@ -1,9 +1,24 @@
 import React from 'react';
 import Piece from './Piece';
 
-const Square = ({ x, y, color, piece, onClick, highlight }) => {
-  const bgColor = color === 'white' ? '#f0d9b5' : '#b58863';
-  const backgroundColor = highlight ? 'red' : bgColor;
+const Square = ({ x, y, color, piece, onClick }) => {
+  let backgroundColor = '#00FF00';
+  switch(color){
+    case 'green':
+      backgroundColor = '#00FF00'; // Green for valid moves
+      break;
+    case 'red':
+      backgroundColor = '#FF0000'; // Red for check or error indication
+      break;
+    case 'white':
+      backgroundColor = '#f0d9b5'; // Default white square
+      break;
+    case 'black':
+      backgroundColor = '#b58863'; // Default black square
+      break;
+    default:
+      backgroundColor = '#00FF00';
+  }
 
   return (
     <div
