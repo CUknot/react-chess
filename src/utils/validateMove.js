@@ -1,4 +1,3 @@
-
 const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, turn) => {
   if (!piece) return { isValid: false , enPassantCapture: false};
   if (piece.color !== turn) return { isValid: false , enPassantCapture: false};
@@ -101,7 +100,6 @@ const validateMove = (startX, startY, targetX, targetY, piece, board, lastMove, 
    }
 
     if (isKingInCheck(piece.color, newBoard, lastMove)) {
-      console.log("check");
       return { isValid: false , enPassantCapture: false}; // Move is invalid if it leaves the king in check
     }
   }
@@ -125,7 +123,7 @@ const isKingInCheck = (color, board, lastMove) => {
   }
 
   if (!kingPosition) return false ; // No king found (should not happen in a normal game)
-  console.log(kingPosition);
+  //console.log(kingPosition);
 
   // Check if any opponent piece can move to the king's position
   const opponentColor = color === 'white' ? 'black' : 'white';
@@ -159,5 +157,6 @@ const isPathClear = (startX, startY, targetX, targetY, board) => {
 
   return true ;
 };
+
 
 export default validateMove;

@@ -1,9 +1,9 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Square from './Square';
 import validateMove from '../utils/validateMove';
+import isCheckmate from '../utils/IsCheckmate';
 
-const Board = () => {
+const Board = ({ onGameOver }) => {
   const initialBoardSetup = [
     [
       { type: 'rook', color: 'black' },
@@ -81,6 +81,13 @@ const Board = () => {
 
     setValidMoves([]);
   };
+
+  useEffect(() => {
+    if (isCheckmate(turn, board, lastMove)) {
+      console.log(`${turn} loses!`); // Or set some game over state
+      onGameOver(turn === 'white' ? 'Black' : 'White');
+    }
+  }, [board, turn, lastMove, onGameOver]); // Dependencies for useEffect
 
   const handleSquareClick = (x, y) => {
     if (selectedSquare) {

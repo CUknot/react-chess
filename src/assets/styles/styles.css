@@ -25,3 +25,55 @@
     height: 40px;
   }
   
+  .game-over-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.restart-button,
+.main-menu-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-button {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.restart-button:hover {
+  background-color: #218838;
+}
+
+.main-menu-button {
+  background-color: #007bff; /* Blue */
+  color: white;
+}
+
+.main-menu-button:hover {
+  background-color: #0069d9;
+}
