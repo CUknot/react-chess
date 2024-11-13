@@ -1,4 +1,4 @@
-# Chess Game Project
+# Chess Game Project [https://cuknot.github.io/react-chess/](https://cuknot.github.io/react-chess/)
 
 ## Overview
 
@@ -52,5 +52,3 @@ To run the project locally, follow these steps:
     npm install
 
 3. npm start
-
-or go to [https://cuknot.github.io/react-chess/](https://cuknot.github.io/react-chess/)
